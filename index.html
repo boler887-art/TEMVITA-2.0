@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TEMVITA — Медицинские изделия | Сатыбалдинова Айнагуль Орынбаевна</title>
+  
+  
+  <style>
+    :root {
+      --bg: #0a1628;
+      --bg-card: #111d33;
+      --bg-soft: #152238;
+      --teal: #00c4b4;
+      --teal-dark: #00a89a;
+      --text: #e8f0f7;
+      --text-muted: #8ba3b8;
+      --border: rgba(0, 196, 180, 0.25);
+      --radius: 12px;
+      --shadow: 0 8px 32px rgba(0,0,0,0.35);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.55;
+      min-height: 100vh;
+    }
+    a { color: var(--teal); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* HEADER / VIZITKA */
+    header {
+      background: linear-gradient(145deg, #0d1f38 0%, #0a1628 60%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 0 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: -40%; right: -10%;
+      width: 50%; height: 180%;
+      background: radial-gradient(circle, rgba(0,196,180,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: -0.5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .logo span { color: #7ee8dc; font-weight: 400; }
+    .badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal);
+      opacity: 0.9;
+      margin-bottom: 8px;
+    }
+    .name {
+      font-size: 1.65rem;
+      font-weight: 600;
+      margin: 4px 0 6px;
+      line-height: 1.25;
+    }
+    .position {
+      color: var(--teal);
+      font-size: 1rem;
+      margin-bottom: 16px;
+    }
+    .company {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .address {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      max-width: 340px;
+    }
+    .contact-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      min-width: 220px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .qr-box {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 14px;
+      background: #fff;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .qr-box img { width: 120px; height: 120px; }
+    .qr-label {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    .phone {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: 0.5px;
+    }
+    .phone a { color: inherit; }
+    .loc {
+      font-size: 0.75rem;
+      color: var(--teal);
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--bg-soft);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    nav ul {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+      padding: 12px 0;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(0,196,180,0.15);
+      color: var(--teal);
+      text-decoration: none;
+    }
+
+    /* SECTIONS */
+    section { padding: 48px 0; }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2::before {
+      content: '';
+      width: 4px;
+      height: 22px;
+      background: var(--teal);
+      border-radius: 2px;
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      max-width: 640px;
+    }
+
+    /* PRODUCTS */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(0,196,180,0.12);
+    }
+    .product-img {
+      height: 200px;
+      background: #0d1a2c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .product-img img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+    .product-body {
+      padding: 16px 18px 20px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .product-art {
+      font-size: 0.75rem;
+      color: var(--teal);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .product-name {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      line-height: 1.35;
+    }
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      flex: 1;
+      margin-bottom: 14px;
+    }
+    .product-price {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--teal);
+    }
+    .product-price span {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* VIDEOS */
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .video-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .video-card video {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #000;
+      display: block;
+    }
+    .video-info {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+    .video-title { font-size: 0.9rem; font-weight: 500; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-teal {
+      background: var(--teal);
+      color: #0a1628;
+    }
+    .btn-teal:hover { background: var(--teal-dark); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-outline:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+    .btn-danger {
+      background: rgba(220,60,60,0.15);
+      color: #ff6b6b;
+      border: 1px solid rgba(220,60,60,0.3);
+    }
+    .btn-danger:hover { background: rgba(220,60,60,0.3); }
+    .upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-align: center;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .upload-zone:hover, .upload-zone.dragover {
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+    .upload-zone input { display: none; }
+
+    /* CERTS */
+    .certs-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .cert-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .cert-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(0,196,180,0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .cert-info { flex: 1; min-width: 180px; }
+    .cert-name { font-weight: 500; font-size: 0.95rem; }
+    .cert-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .cert-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    footer .logo { font-size: 1.1rem; justify-content: center; margin-bottom: 8px; }
+
+    /* UTILS */
+    .hidden { display: none !important; }
+    @media (max-width: 640px) {
+      .name { font-size: 1.35rem; }
+      .header-inner { flex-direction: column; align-items: stretch; }
+      .contact-card { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div>
+        <div class="logo">tem<span>vita</span></div>
+        <div class="badge">Sales Leadership</div>
+        <div class="name">Сатыбалдинова<br>Айнагуль Орынбаевна</div>
+        <div class="position">Заместитель директора по продажам</div>
+        <div class="company">ТОО «TEMVITA»</div>
+        <div class="address">
+          Республика Казахстан, г. Астана<br>
+          ул. Тәуелсіздік, 22А, БЦ Quorum, 7 этаж, каб. 704
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="qr-label">СКАНИРУЙТЕ QR</div>
+        <div class="qr-box" id="qrcode">
+          <!-- QR generated by JS -->
+        </div>
+        <div class="phone"><a href="tel:+77752607311">+7 775 260 7311</a></div>
+        <div class="loc">TEMVITA • ASTANA</div>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <ul>
+        <li><a href="#products" class="active">Продукция</a></li>
+        <li><a href="#videos">Видео</a></li>
+        <li><a href="#certs">Сертификаты</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main>
+    <!-- PRODUCTS -->
+    <section id="products">
+      <div class="container">
+        <h2>Медицинская продукция</h2>
+        <p class="section-desc">Ортопедические изделия, тонометры, термометры и расходные материалы. Цены указаны при 100% предоплате (тенге).</p>
+        <div class="products-grid" id="products-grid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- VIDEOS -->
+    <section id="videos">
+      <div class="container">
+        <h2>Видео</h2>
+        <p class="section-desc">Демонстрация изделий. Вы можете загрузить новое видео или удалить существующее (локально в браузере).</p>
+        <div class="upload-zone" id="video-upload-zone">
+          <input type="file" id="video-input" accept="video/*" multiple>
+          <div>📁 Нажмите или перетащите видео для загрузки</div>
+        </div>
+        <div class="videos-grid" id="videos-grid">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATES -->
+    <section id="certs">
+      <div class="container">
+        <h2>Сертификаты и регистрационные удостоверения</h2>
+        <p class="section-desc">Регистрационные удостоверения РК. Скачивание, удаление и замена (локально).</p>
+        <div class="upload-zone" id="cert-upload-zone">
+          <input type="file" id="cert-input" accept=".pdf,image/*" multiple>
+          <div>📄 Нажмите или перетащите PDF/изображение для добавления</div>
+        </div>
+        <div class="certs-list" id="certs-list">
+          <!-- filled by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTS -->
+    <section id="contacts">
+      <div class="container">
+        <h2>Контакты</h2>
+        <p class="section-desc">Свяжитесь с нами для заказа и консультации.</p>
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:480px;">
+          <p style="margin-bottom:8px;"><strong>Сатыбалдинова Айнагуль Орынбаевна</strong></p>
+          <p style="color:var(--text-muted);margin-bottom:12px;">Заместитель директора по продажам</p>
+          <p>📞 <a href="tel:+77752607311">+7 775 260 7311</a></p>
+          <p style="margin-top:8px;">📍 Республика Казахстан, г. Астана,<br>ул. Тәуелсіздік, 22А, БЦ Quorum, 7 этаж, каб. 704</p>
+          <p style="margin-top:12px;color:var(--teal);">ТОО «TEMVITA»</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="logo">tem<span>vita</span></div>
+      <p>© 2024–2026 ТОО «TEMVITA». Качество и забота о вашем здоровье.</p>
+    </div>
+  </footer>
+
+  
+  <script>
+    // ========== DATA ==========
+    const products = [
+      {
+        art: "TM Temvita 50В",
+        name: "Тонометр, измеритель артериального давления TM Temvita Модель 50В",
+        desc: "Медицинский прибор для измерения АД и частоты пульса. Удобная манжета 22–42 см. Стетоскоп в комплекте. Для учреждений здравоохранения и домашнего использования.",
+        price: "5 408 ₸",
+        img: "img/4. Измеритель артериального давления TM Temvita Модель 50В.jpeg"
+      },
+      {
+        art: "TM Temvita 50С",
+        name: "Тонометр, измеритель артериального давления TM Temvita Модель 50С",
+        desc: "Медицинский прибор для измерения АД и частоты пульса. Удобная манжета 25,4–40,6 см. Стетоскоп в комплекте.",
+        price: "5 408 ₸",
+        img: "img/4. Измеритель артериального давления TM Temvita Модель 50С.jpeg"
+      },
+      {
+        art: "Temvita Teddy",
+        name: "Электронный термометр TM Temvita Teddy",
+        desc: "Диапазон 32,0–42,9 °C. Точность ±0,1 °C. Время измерения 60 сек. Звуковой сигнал, память, автоотключение. Водонепроницаемый, гибкий наконечник. Для детей.",
+        price: "1 462 ₸",
+        img: "img/17. Элетронный термометр TM Temvita Teddy.jpg"
+      },
+      {
+        art: "Temvita Classic",
+        name: "Электронный термометр TM Temvita Classic",
+        desc: "Диапазон 32,0–42,9 °C. Точность ±0,1 °C. Время измерения 60 сек. Звуковой сигнал, память, автоотключение. Водонепроницаемый, гибкий наконечник.",
+        price: "1 154 ₸",
+        img: "img/16. Электронный термометр TM Temvita Classic.jpg"
+      },
+      {
+        art: "Арт. 01901",
+        name: "Бандаж фиксирующий на тазобедренный сустав (Шина Фрейка)",
+        desc: "Для новорождённых. Фиксация бёдер в положении отведения и сгибания ≥90°. При дисплазии ТБС лёгкой степени, предвывихе и подвывихе бедра. Размеры 1–4 (14–27 см).",
+        price: "3 838 ₸",
+        img: "img/14. Фиксирующий бандаж на тазобедренный сустав (шина Фре.jpg"
+      },
+      {
+        art: "Арт. 01902",
+        name: "Бандаж детский для пупочной грыжи",
+        desc: "Со специальным пилотом. Фиксация грыжевого содержимого, защита от ущемления. Для консервативного лечения пупочных грыж у детей до 3 лет. Мягкая ткань, застёжка VELCRO.",
+        price: "2 900 ₸",
+        img: "img/3. Детский бандаж для пупочной грыжи.jpg"
+      },
+      {
+        art: "Арт. 01903",
+        name: "Бандаж эластичный дородовой",
+        desc: "Снимает нагрузку с поясницы, поддерживает живот во время беременности. Широкая лента 15 см, дополнительные ленты крепления, дышащая структура. Размеры 1–3 (68–120 см).",
+        price: "3 800 ₸",
+        img: "img/15. Эластичный дородовой бандаж Бандаж эластичный дородовой.jpg"
+      },
+      {
+        art: "Арт. 01904",
+        name: "Бандаж фиксирующий эластичный с жёсткими вставками",
+        desc: "Жёсткая фиксация поясничного отдела. При нестабильности, спондилолистезе, грыжах дисков, консолидированных переломах. Жёсткие вставки, медицинский трикотаж. Размеры 1–6 (68–128 см).",
+        price: "6 154 ₸",
+        img: "img/2. Бандаж фиксирующий эластичный (с жесткими вставками).jpg"
+      },
+      {
+        art: "Арт. 01906",
+        name: "Повязка медицинская из неопрена для фиксации коленного сустава",
+        desc: "С открытой чашечкой. Фиксация, защита и поддержка связочного аппарата и мягких тканей колена. Размеры 1–5 (32–50 см).",
+        price: "4 000 ₸",
+        img: "img/13.Повязка медицинская из неопрена для фиксации.jpg"
+      },
+      {
+        art: "Арт. 01907",
+        name: "Повязка медицинская из неопрена для фиксации голеностопного сустава",
+        desc: "Улучшает кровообращение, снимает отёк. Фиксация при травмах и нагрузках. Дышащий неопрен. Универсальная для левой и правой ноги. Размеры 1–4 (13–29 см).",
+        price: "3 077 ₸",
+        img: "img/6.Медицинская повязка из неопрена для фиксации голен.jpg"
+      },
+      {
+        art: "Арт. 01908",
+        name: "Трусы медицинские для мальчиков (после обрезания)",
+        desc: "Защита от травм, воздухообмен, мягкая ткань. Способствуют скорейшему заживлению после процедуры. Размер по весу: 1 (12–17 кг), 2 (18–23 кг).",
+        price: "2 154 ₸",
+        img: "img/8.Медицинские трусы для мальчиков (после обрезания).jpg"
+      },
+      {
+        art: "Арт. 01909",
+        name: "Повязка медицинская из неопрена для фиксации лучезапястного сустава",
+        desc: "Эластичность, удобная фиксация. Реабилитация после травм. Для левой и правой руки. Цвет чёрный.",
+        price: "2 308 ₸",
+        img: "img/7.Медицинская повязка из неопрена для фиксации лучезапястного сустава.jpg"
+      },
+      {
+        art: "Арт. 01910",
+        name: "Бандаж поддерживающий для руки (левый / правый)",
+        desc: "Реабилитация после переломов, растяжений, операций плечевой, локтевой и лучевой области. Регулируемый ремень. Размеры 1–3 (длина предплечья 27–46 см).",
+        price: "3 462 ₸",
+        img: "img/1. Бандаж поддерживающий для руки.jpg"
+      },
+      {
+        art: "Арт. 01912",
+        name: "Воротник ортопедический жёсткий",
+        desc: "Полная фиксация шейного отдела. После операций, при нестабильности, переломах со смещением, транспортной эвакуации. Гипоаллергенный. Размеры 1–4 (окружность шеи 36–47 см).",
+        price: "5 231 ₸",
+        img: "img/10.Ортопедический жесткий воротник.jpg"
+      },
+      {
+        art: "Арт. 01914",
+        name: "Корректор осанки",
+        desc: "Профилактика и устранение нарушений осанки, сколиоза, кифоза, сутулости. Фиксация, эластичность, дышащий материал. Размеры 0–4 (окружность груди 59–110 см).",
+        price: "3 308 ₸",
+        img: "img/5. Корректор осанки.png"
+      },
+      {
+        art: "Арт. 01916",
+        name: "Воротник ортопедический мягкий для детей (Шина Шанца)",
+        desc: "Мягкая ткань, гипоаллергенный, регулируемая фиксация. Поддержка шейного отдела. Для детей от 2 месяцев. Размеры 1–2 (окружность шеи 24–35 см, высота 5–6 см).",
+        price: "2 769 ₸",
+        img: "img/12. Ортопедический мягкий воротник для детей (шина Шанца).jpg"
+      },
+      {
+        art: "Арт. 01929",
+        name: "Бандаж медицинский послеоперационный (поддерживающий)",
+        desc: "Поддержка мышц брюшного пресса после операций, при грыжах, опущении почек, после родов. Эластичная воздухопроницаемая лента. Размеры 1–6 (68–128 см).",
+        price: "5 000 ₸",
+        img: "img/9.Медицинский после операционный бандаж (поддерживающий).jpg"
+      },
+      {
+        art: "Арт. 01930",
+        name: "Воротник ортопедический мягкий для взрослых (Шина Шанца)",
+        desc: "Лёгкая фиксация шейного отдела, разгрузка позвонков и мышечно-связочного аппарата. Мягкая ткань, регулируемая липучка. Размеры 3–5 (окружность шеи 36–55 см, высота 7,5–11 см).",
+        price: "3 846 ₸",
+        img: "img/11. Ортопедический мягкий воротник для взрослых (шина Шанца).jpg"
+      },
+      {
+        art: "Бинт Normal",
+        name: "Бинт эластичный медицинский NORMAL",
+        desc: "Средней растяжимости. Профилактика и лечение травм, варикоза, артритов. Высокое содержание хлопка, металлические клипсы. Ширина 6–14 см, длина 0,6–5 м.",
+        price: "от 462 ₸ до 2 769 ₸",
+        img: "img/18.Эластичный бинт медицинский.jpg"
+      }
+    ];
+
+    const initialVideos = [
+      { id: "v1", title: "Бандаж поддерживающий для руки", src: "video/1. Видео.mp4" },
+      { id: "v2", title: "Бандаж фиксирующий эластичный (01904)", src: "video/2. видео.mp4" },
+      { id: "v3", title: "Детский бандаж для пупочной грыжи", src: "video/3. видео.mp4" },
+      { id: "v4", title: "Измеритель артериального давления Temvita", src: "video/4. видео.mp4" }
+    ];
+
+    const initialCerts = [
+      { id: "c1", name: "Сертификат 1", file: "certs/Сертификат 1.pdf" },
+      { id: "c2", name: "Сертификат 2", file: "certs/Сертификат 2.pdf" },
+      { id: "c3", name: "РУ — Бинт эластичный (ELASTIKUM)", file: "certs/Сертификат 3.pdf" },
+      { id: "c4", name: "РУ — Повязка голеностоп (01907)", file: "certs/Сертификат 4.pdf" },
+      { id: "c5", name: "РУ — Бандаж пупочной грыжи (01902)", file: "certs/Сертификат 5.pdf" },
+      { id: "c6", name: "РУ — Бандаж фиксирующий (01904)", file: "certs/Сертификат 6.pdf" },
+      { id: "c7", name: "РУ — Бандаж для руки (01910)", file: "certs/Сертификат 7.pdf" },
+      { id: "c8", name: "РУ — Воротники Шанца (01916/01930)", file: "certs/Сертификат 8.pdf" },
+      { id: "c9", name: "РУ — Бандаж дородовой (01903)", file: "certs/Сертификат 9.pdf" },
+      { id: "c10", name: "РУ — Термометры Temvita Classic/Teddy", file: "certs/Сертификат 10.pdf" },
+      { id: "c11", name: "РУ — Бандаж послеоперационный (01929)", file: "certs/Сертификат 11.pdf" },
+      { id: "c12", name: "РУ — Трусы медицинские для мальчиков", file: "certs/Сертификат 12.pdf" },
+      { id: "c13", name: "РУ — Шина Фрейка (01901)", file: "certs/Сертификат 13.pdf" }
+    ];
+
+    // ========== RENDER ==========
+    function renderProducts() {
+      const grid = document.getElementById("products-grid");
+      grid.innerHTML = products.map(p => `
+        <article class="product-card">
+          <div class="product-img"><img src="${p.img}" alt="${p.name}" loading="lazy"></div>
+          <div class="product-body">
+            <div class="product-art">${p.art}</div>
+            <div class="product-name">${p.name}</div>
+            <div class="product-desc">${p.desc}</div>
+            <div class="product-price">${p.price}</div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    let videos = JSON.parse(localStorage.getItem("temvita_videos") || "null") || [...initialVideos];
+    let certs = JSON.parse(localStorage.getItem("temvita_certs") || "null") || [...initialCerts];
+
+    function saveVideos() { localStorage.setItem("temvita_videos", JSON.stringify(videos)); }
+    function saveCerts() { localStorage.setItem("temvita_certs", JSON.stringify(certs)); }
+
+    function renderVideos() {
+      const grid = document.getElementById("videos-grid");
+      grid.innerHTML = videos.map(v => `
+        <div class="video-card" data-id="${v.id}">
+          <video controls preload="metadata" src="${v.src}"></video>
+          <div class="video-info">
+            <span class="video-title">${v.title}</span>
+            <button class="btn btn-danger" onclick="deleteVideo('${v.id}')">Удалить</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function deleteVideo(id) {
+      videos = videos.filter(v => v.id !== id);
+      saveVideos();
+      renderVideos();
+    }
+
+    function renderCerts() {
+      const list = document.getElementById("certs-list");
+      list.innerHTML = certs.map(c => `
+        <div class="cert-item" data-id="${c.id}">
+          <div class="cert-icon">📄</div>
+          <div class="cert-info">
+            <div class="cert-name">${c.name}</div>
+            <div class="cert-meta">${c.file.split("/").pop()}</div>
+          </div>
+          <div class="cert-actions">
+            <a class="btn btn-teal" href="${c.file}" download target="_blank">Скачать</a>
+            <button class="btn btn-outline" onclick="replaceCert('${c.id}')">Заменить</button>
+            <button class="btn btn-danger" onclick="deleteCert('${c.id}')">Удалить</button>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function deleteCert(id) {
+      certs = certs.filter(c => c.id !== id);
+      saveCerts();
+      renderCerts();
+    }
+
+    function replaceCert(id) {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = ".pdf,image/*";
+      input.onchange = e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const url = URL.createObjectURL(file);
+        const cert = certs.find(c => c.id === id);
+        if (cert) {
+          cert.name = file.name;
+          cert.file = url;
+          saveCerts();
+          renderCerts();
+        }
+      };
+      input.click();
+    }
+
+    // Upload handlers
+    function setupUpload(zoneId, inputId, onFiles) {
+      const zone = document.getElementById(zoneId);
+      const input = document.getElementById(inputId);
+      zone.addEventListener("click", () => input.click());
+      zone.addEventListener("dragover", e => { e.preventDefault(); zone.classList.add("dragover"); });
+      zone.addEventListener("dragleave", () => zone.classList.remove("dragover"));
+      zone.addEventListener("drop", e => {
+        e.preventDefault();
+        zone.classList.remove("dragover");
+        onFiles(e.dataTransfer.files);
+      });
+      input.addEventListener("change", e => onFiles(e.target.files));
+    }
+
+    setupUpload("video-upload-zone", "video-input", files => {
+      [...files].forEach(f => {
+        const url = URL.createObjectURL(f);
+        videos.push({ id: "v" + Date.now() + Math.random(), title: f.name, src: url });
+      });
+      saveVideos();
+      renderVideos();
+    });
+
+    setupUpload("cert-upload-zone", "cert-input", files => {
+      [...files].forEach(f => {
+        const url = URL.createObjectURL(f);
+        certs.push({ id: "c" + Date.now() + Math.random(), name: f.name, file: url });
+      });
+      saveCerts();
+      renderCerts();
+    });
+
+    // QR — офлайн-заглушка. После размещения сайта на хостинге сгенерируйте QR на реальный URL
+    // (например на qr-code-generator.com или через API) и замените содержимое #qrcode.
+    (function(){
+      const box = document.getElementById("qrcode");
+      const url = window.location.href.split("#")[0];
+      box.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+          <rect width="120" height="120" fill="#fff"/>
+          <rect x="8" y="8" width="28" height="28" fill="#0a1628"/>
+          <rect x="12" y="12" width="20" height="20" fill="#fff"/>
+          <rect x="16" y="16" width="12" height="12" fill="#0a1628"/>
+          <rect x="84" y="8" width="28" height="28" fill="#0a1628"/>
+          <rect x="88" y="12" width="20" height="20" fill="#fff"/>
+          <rect x="92" y="16" width="12" height="12" fill="#0a1628"/>
+          <rect x="8" y="84" width="28" height="28" fill="#0a1628"/>
+          <rect x="12" y="88" width="20" height="20" fill="#fff"/>
+          <rect x="16" y="92" width="12" height="12" fill="#0a1628"/>
+          <rect x="44" y="8" width="8" height="8" fill="#0a1628"/>
+          <rect x="56" y="8" width="8" height="8" fill="#0a1628"/>
+          <rect x="68" y="20" width="8" height="8" fill="#0a1628"/>
+          <rect x="44" y="32" width="8" height="8" fill="#0a1628"/>
+          <rect x="60" y="32" width="8" height="8" fill="#0a1628"/>
+          <rect x="8" y="44" width="8" height="8" fill="#0a1628"/>
+          <rect x="24" y="44" width="8" height="8" fill="#0a1628"/>
+          <rect x="40" y="48" width="8" height="8" fill="#0a1628"/>
+          <rect x="56" y="44" width="8" height="8" fill="#0a1628"/>
+          <rect x="72" y="48" width="8" height="8" fill="#0a1628"/>
+          <rect x="88" y="44" width="8" height="8" fill="#0a1628"/>
+          <rect x="104" y="48" width="8" height="8" fill="#0a1628"/>
+          <rect x="44" y="60" width="8" height="8" fill="#0a1628"/>
+          <rect x="60" y="64" width="8" height="8" fill="#0a1628"/>
+          <rect x="76" y="60" width="8" height="8" fill="#0a1628"/>
+          <rect x="44" y="80" width="8" height="8" fill="#0a1628"/>
+          <rect x="56" y="88" width="8" height="8" fill="#0a1628"/>
+          <rect x="72" y="84" width="8" height="8" fill="#0a1628"/>
+          <rect x="88" y="80" width="8" height="8" fill="#0a1628"/>
+          <rect x="100" y="88" width="8" height="8" fill="#0a1628"/>
+          <rect x="48" y="100" width="8" height="8" fill="#0a1628"/>
+          <rect x="64" y="104" width="8" height="8" fill="#0a1628"/>
+          <rect x="84" y="100" width="8" height="8" fill="#0a1628"/>
+          <text x="60" y="62" text-anchor="middle" font-size="9" fill="#00c4b4" font-family="sans-serif">TEMVITA</text>
+        </svg>`;
+      box.title = "После публикации сайта замените на QR с реальным URL:\n" + url;
+    })();
+
+    // Init
+    renderProducts();
+    renderVideos();
+    renderCerts();
+
+    // Smooth scroll + nav active
+    document.querySelectorAll("nav a").forEach(a => {
+      a.addEventListener("click", e => {
+        document.querySelectorAll("nav a").forEach(x => x.classList.remove("active"));
+        a.classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>
