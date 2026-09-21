@@ -1,0 +1,15 @@
+TEMVITA — публикация на GitHub Pages
+
+1. Загрузите ВСЕ файлы и папки из этого архива в КОРЕНЬ репозитория TEMVITA-2.0.
+2. Обязательно загрузите скрытый файл .nojekyll. Он нужен, чтобы GitHub Pages публиковал сайт как обычный статический HTML без обработки Jekyll.
+3. GitHub → Settings → Pages.
+4. Build and deployment → Source: Deploy from a branch.
+5. Branch: main, Folder: /(root), затем Save.
+6. После одного коммита не загружайте следующие файлы, пока текущий Pages deployment не завершился.
+7. GitHub → Actions → pages build and deployment. Успешный запуск отмечается зелёной галочкой.
+8. Откройте https://boler887-art.github.io/TEMVITA-2.0/ и нажмите Ctrl+F5.
+
+Если deployment красный:
+- откройте Actions → последний pages build and deployment;
+- откройте красный шаг build или deploy;
+- строка под "Annotations" содержит точную причину.
