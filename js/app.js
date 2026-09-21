@@ -92,10 +92,11 @@ function escapeHtml(value) {
 }
 
 function productCategory(product) {
-  const t = normalizeText(`${product.title} ${product.desc}`);
-  if (t.includes("тонометр") || t.includes("давлен")) return "tonometers";
-  if (t.includes("термометр")) return "thermometers";
-  if (t.includes("воротник") || t.includes("шина шанца") || t.includes("корректор") || t.includes("сустав") || t.includes("повязка")) return "orthopedic";
+  const title = normalizeText(product.title);
+  if (title.includes("тонометр")) return "tonometers";
+  if (title.includes("термометр")) return "thermometers";
+  if (title.includes("бандаж")) return "bandages";
+  if (title.includes("воротник") || title.includes("повязка") || title.includes("корректор") || title.includes("шина шанца")) return "orthopedic";
   return "bandages";
 }
 
@@ -141,7 +142,7 @@ function renderProducts() {
           <div><span class="price-label">Розничная</span><span class="price-retail">${formatPrice(p.retail)}</span></div>
         </div>
         <div class="product-actions">
-          <a class="product-wa" href="${whatsappProductUrl(p)}" target="_blank" rel="noopener">Заказать в WhatsApp</a>
+          <a class="product-wa" href="${whatsappProductUrl(p)}" target="_blank" rel="noopener">Написать в WhatsApp</a>
           <a class="product-call" href="tel:${CONTACT_PHONE}">Позвонить</a>
         </div>
       </div>
@@ -161,13 +162,12 @@ function renderCerts() {
 }
 
 function initQR() {
-  if (typeof QRCode === "undefined") return;
-  const url = window.location.href.split("#")[0];
-  const opts = { width: 140, height: 140, colorDark: "#0a1628", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M };
-  const el1 = document.getElementById("qrcode");
-  const el2 = document.getElementById("qrcode-footer");
-  if (el1) new QRCode(el1, { text: url, ...opts });
-  if (el2) new QRCode(el2, { text: url, width: 100, height: 100, colorDark: "#0a1628", colorLight: "#ffffff" });
+  // QR is intentionally static and verified for the public TEMVITA site.
+  // Fixed dimensions prevent browser/CSS stretching and remove CDN dependency.
+  document.querySelectorAll(".qrcode img").forEach(img => {
+    img.src = "qr.png";
+    img.decoding = "async";
+  });
 }
 
 function getGitHubRepoInfo() {
@@ -210,9 +210,11 @@ function findRootAsset(rootFiles, patterns, extRegex) {
 
 function applyDecorationsFromRoot(rootFiles) {
   const right = findRootAsset(rootFiles, [
+    /^1(?:\s*\([^)]*\))?\.[^.]+$/i,
     /^ornament[-_ ]?right/i, /^right[-_ ]?ornament/i, /орнамент[-_ ]?прав/i, /узор[-_ ]?прав/i
   ], DECOR_EXT);
   const corners = findRootAsset(rootFiles, [
+    /^2(?:\s*\([^)]*\))?\.[^.]+$/i,
     /^ornament[-_ ]?corners?/i, /^corner[-_ ]?ornament/i, /орнамент[-_ ]?(угол|угл|кра)/i, /узор[-_ ]?(угол|угл|кра)/i
   ], DECOR_EXT);
 
@@ -222,7 +224,7 @@ function applyDecorationsFromRoot(rootFiles) {
   if (corners) {
     document.documentElement.style.setProperty("--ornament-corner-image", `url("${rootFileUrl(corners)}")`);
   }
-  return { right: right?.name || null, corners: corners?.name || null };
+  return { right: right?.name || "ornament-right.png", corners: corners?.name || "ornament-corner.png" };
 }
 
 function holidayFileScore(file) {
@@ -384,7 +386,7 @@ function parseBandageSize(name) {
   const s = normalizeText(name).replace(/,/g, ".");
   if (!s.includes("бинт") || !s.includes("normal")) return null;
   const widthMatch = s.match(/(6|8|10|12|14)\s*см/);
-  const lengthMatch = s.match(/(?:\*|x|х|×)?\s*(0\.6|1\.5|3|5)\s*м\b/);
+  const lengthMatch = s.match(/(?:\*|x|х|×)?\s*(0\.6|1\.5|3|5)\s*м(?:\s|$)/);
   if (!widthMatch || !lengthMatch) return null;
   return { width: widthMatch[1], length: lengthMatch[1] };
 }
@@ -493,39 +495,60 @@ function applyRootBandageImage(rootFiles) {
   return true;
 }
 
+const DEFAULT_VIDEOS = [
+  { key: "01902", src: "video/video1-baby-bandage.mp4", poster: "images/content (4).jpg", title: "Бандаж детский для пупочной грыжи", desc: "Модель 01902 — специальный пилот, Velcro, согревающий эффект" },
+  { key: "01904", src: "video/video2-elastic-bandage.mp4", poster: "images/content (2).jpg", title: "Бандаж фиксирующий эластичный", desc: "Модель 01904 — с жёсткими вставками, для поясницы" },
+  { key: "01910", src: "video/video3-support-bandage.mp4", poster: "images/content (12).jpg", title: "Бандаж поддерживающий для руки", desc: "Модель 01910 — премиум качество, универсальная посадка" },
+  { key: "50c", src: "video/video4-tonometer.mp4", poster: "images/content (3).jpg", title: "Тонометр TM Temvita", desc: "Измерение артериального давления" }
+];
+
 function renderVideosFromRoot(rootFiles) {
   const grid = document.getElementById("videos-grid");
-  const videoFiles = rootFiles.filter(f => VIDEO_EXT.test(f.name));
-  if (!videoFiles.length) return 0;
+  if (!grid) return 0;
 
+  // Holiday videos belong only to the holiday mini-banner and must not leak into the product video section.
+  const rootVideoFiles = rootFiles.filter(f => VIDEO_EXT.test(f.name) && holidayFileScore(f) === 0);
+  const used = new Set();
   const cards = [];
-  for (const file of videoFiles) {
-    const product = PRODUCTS.find(p => productMatchesText(p, file.name));
-    const title = product ? product.title : file.name.replace(/\.[^.]+$/, "");
-    const poster = product ? product.img : "images/content (4).jpg";
+
+  DEFAULT_VIDEOS.forEach(item => {
+    const product = PRODUCTS.find(p => p.key === item.key);
+    const override = product ? rootVideoFiles.find(f => productMatchesText(product, f.name)) : null;
+    if (override) used.add(override.name);
+    const src = override ? rootFileUrl(override) : item.src;
+    const poster = product?.img || item.poster;
     cards.push(`
       <div class="video-card">
-        <video controls playsinline preload="metadata" poster="${poster}">
-          <source src="${file.download_url || file.name}">
+        <video controls playsinline preload="metadata" poster="${escapeHtml(poster)}">
+          <source src="${escapeHtml(src)}">
         </video>
-        <h3>${title}</h3>
-        <p>${product ? `Арт. ${product.art}` : "Видео TEMVITA"}</p>
+        <h3>${escapeHtml(item.title)}</h3>
+        <p>${escapeHtml(item.desc)}</p>
       </div>
     `);
-  }
+  });
+
+  // Additional explicitly uploaded product videos are appended instead of deleting the standard set.
+  rootVideoFiles.filter(file => !used.has(file.name)).forEach(file => {
+    const product = PRODUCTS.find(p => productMatchesText(p, file.name));
+    if (!product) return;
+    cards.push(`
+      <div class="video-card">
+        <video controls playsinline preload="metadata" poster="${escapeHtml(product.img)}">
+          <source src="${escapeHtml(rootFileUrl(file))}">
+        </video>
+        <h3>${escapeHtml(product.title)}</h3>
+        <p>Арт. ${escapeHtml(product.art)}</p>
+      </div>
+    `);
+  });
+
   grid.innerHTML = cards.join("");
   return cards.length;
 }
 
 function renderFallbackVideos() {
-  const grid = document.getElementById("videos-grid");
-  const fallback = [
-    ["video/video1-baby-bandage.mp4", "images/content (4).jpg", "Бандаж детский для пупочной грыжи", "Модель 01902 — специальный пилот, Velcro, согревающий эффект"],
-    ["video/video2-elastic-bandage.mp4", "images/content (2).jpg", "Бандаж фиксирующий эластичный", "Модель 01904 — с жёсткими вставками, для поясницы"],
-    ["video/video3-support-bandage.mp4", "images/content (12).jpg", "Бандаж поддерживающий для руки", "Модель 01910 — премиум качество, универсальная посадка"],
-    ["video/video4-tonometer.mp4", "images/content (3).jpg", "Тонометр TM Temvita", "Измерение артериального давления"],
-  ];
-  grid.innerHTML = fallback.map(v => `<div class="video-card"><video controls playsinline preload="metadata" poster="${v[1]}"><source src="${v[0]}" type="video/mp4"></video><h3>${v[2]}</h3><p>${v[3]}</p></div>`).join("");
+  return renderVideosFromRoot([]);
 }
 
 async function initDynamicContent() {
