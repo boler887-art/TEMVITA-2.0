@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temvita — Цифровая визитка | Медицинские изделия</title>
+  <meta name="description" content="ТОО «TEMVITA» — медицинские изделия премиум-качества. Тонометры, бандажи, воротники, термометры. Астана, Казахстан.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Decorative layers. Hidden from screen readers and never block clicks. -->
+  <div class="pattern-bg" aria-hidden="true"></div>
+  <div class="right-ornament-watermark" id="right-ornament-watermark" aria-hidden="true"></div>
+  <div class="corner-ornament corner-tl" aria-hidden="true"></div>
+  <div class="corner-ornament corner-tr" aria-hidden="true"></div>
+  <div class="corner-ornament corner-bl" aria-hidden="true"></div>
+  <div class="corner-ornament corner-br" aria-hidden="true"></div>
+
+  <!-- Header / Business Card -->
+  <header class="hero" id="home">
+    <div class="container hero-inner">
+      <div class="hero-card">
+        <div class="logo-block">
+          <div class="logo">tem<span>vita</span></div>
+          <div class="tagline">SALES LEADERSHIP</div>
+        </div>
+        <div class="person">
+          <h1>Сатыбалдинова<br>Айнагуль Орынбаевна</h1>
+          <p class="position">Заместитель директора по продажам</p>
+        </div>
+        <div class="company-info">
+          <p class="company">ТОО «TEMVITA»</p>
+          <p class="address">Республика Казахстан, г. Астана<br>ул. Тәуелсіздік, 22А, БЦ Quorum, 7 этаж, каб. 704</p>
+          <a href="tel:+77752607311" class="phone">+7 775 260 7311</a>
+          <div class="hero-actions">
+            <a class="action-btn whatsapp" href="https://wa.me/77752607311?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D0%B5%D0%BD%D1%8F%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%86%D0%B8%D1%8F%20TEMVITA." target="_blank" rel="noopener">WhatsApp</a>
+            <a class="action-btn secondary" href="tel:+77752607311">Позвонить</a>
+            <button class="action-btn secondary" type="button" id="save-contact">Сохранить контакт</button>
+          </div>
+        </div>
+        <div class="qr-block">
+          <div id="qrcode" class="qrcode"></div>
+          <p class="qr-hint">Сканируйте для перехода<br>на цифровую визитку</p>
+        </div>
+      </div>
+      <nav class="main-nav">
+        <a href="#products">Продукция</a>
+        <a href="#bandages">Бинты</a>
+        <a href="#video">Видео</a>
+        <a href="#certificates">Сертификаты</a>
+        <a href="#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Holiday mini-banner: takes zero space until a holiday image/video exists in repository root -->
+  <section class="holiday-banner" id="holiday-banner" hidden aria-label="Праздничное поздравление TEMVITA">
+    <div class="container">
+      <div class="holiday-banner-card" id="holiday-banner-card">
+        <button class="holiday-media-button product-image-button" id="holiday-image-button" type="button" hidden aria-label="Открыть праздничную открытку">
+          <img id="holiday-banner-image" alt="Праздничная открытка TEMVITA">
+          <span class="holiday-open-hint">Открыть открытку</span>
+        </button>
+        <video id="holiday-banner-video" controls muted playsinline loop hidden></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section class="section products" id="products">
+    <div class="container">
+      <div class="section-header">
+        <h2>Медицинская продукция</h2>
+        <p class="section-sub">Официальные изделия с регистрационными удостоверениями Республики Казахстан.</p>
+        <p id="price-source-status" class="data-status" data-state="info">Проверяем актуальный прайс…</p>
+      </div>
+      <div class="catalog-toolbar" aria-label="Поиск и фильтры каталога">
+        <div class="search-box">
+          <input id="product-search" type="search" placeholder="Поиск по названию или артикулу…" autocomplete="off" aria-label="Поиск товара">
+          <button id="clear-search" type="button" aria-label="Очистить поиск">×</button>
+        </div>
+        <div class="category-filters" id="category-filters">
+          <button class="filter-chip active" type="button" data-category="all">Все</button>
+          <button class="filter-chip" type="button" data-category="tonometers">Тонометры</button>
+          <button class="filter-chip" type="button" data-category="thermometers">Термометры</button>
+          <button class="filter-chip" type="button" data-category="bandages">Бандажи</button>
+          <button class="filter-chip" type="button" data-category="orthopedic">Ортопедия</button>
+        </div>
+        <div class="catalog-meta">
+          <span id="products-count">18 товаров</span>
+          <a id="download-price" class="price-download" href="#" hidden>Скачать актуальный прайс</a>
+        </div>
+      </div>
+      <div class="products-grid" id="products-grid">
+        <!-- Products injected by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Elastic Bandages -->
+  <section class="section bandages" id="bandages">
+    <div class="container">
+      <div class="section-header">
+        <h2>Бинты эластичные медицинские NORMAL</h2>
+        <p class="section-sub">Средняя растяжимость. Высокое содержание хлопка. Цены указаны «от — до» в зависимости от размера (ширина × длина).</p>
+      </div>
+      <div class="bandages-table-wrap">
+        <table class="bandages-table">
+          <thead>
+            <tr>
+              <th>Ширина</th>
+              <th>0,6 м</th>
+              <th>1,5 м</th>
+              <th>3 м</th>
+              <th>5 м</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>6 см</td>
+              <td>461 – 600 ₸</td>
+              <td>615 – 800 ₸</td>
+              <td>923 – 1 200 ₸</td>
+              <td>1 154 – 1 500 ₸</td>
+            </tr>
+            <tr>
+              <td>8 см</td>
+              <td>538 – 700 ₸</td>
+              <td>692 – 900 ₸</td>
+              <td>1 077 – 1 400 ₸</td>
+              <td>1 692 – 2 200 ₸</td>
+            </tr>
+            <tr>
+              <td>10 см</td>
+              <td>577 – 750 ₸</td>
+              <td>846 – 1 100 ₸</td>
+              <td>1 154 – 1 500 ₸</td>
+              <td>1 769 – 2 300 ₸</td>
+            </tr>
+            <tr>
+              <td>12 см</td>
+              <td>769 – 1 000 ₸</td>
+              <td>885 – 1 150 ₸</td>
+              <td>1 615 – 2 100 ₸</td>
+              <td>2 500 – 3 250 ₸</td>
+            </tr>
+            <tr>
+              <td>14 см</td>
+              <td>923 – 1 200 ₸</td>
+              <td>1 154 – 1 500 ₸</td>
+              <td>1 923 – 2 500 ₸</td>
+              <td>2 769 – 3 600 ₸</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bandage-features">
+        <div class="feat"><span>✔</span> Профилактика и лечение варикоза, тромбофлебита</div>
+        <div class="feat"><span>✔</span> Фиксация суставов, снятие отёков</div>
+        <div class="feat"><span>✔</span> Защита при спорте и нагрузках</div>
+        <div class="feat"><span>✔</span> Металлические клипсы в комплекте</div>
+      </div>
+      <div class="product-card bandage-photo">
+        <img src="images/content (16).jpg" alt="Линейка эластичных бинтов NORMAL" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Section -->
+  <section class="section video-section" id="video">
+    <div class="container">
+      <div class="section-header">
+        <h2>Видео о продукции</h2>
+        <p class="section-sub">Демонстрация применения медицинских изделий Temvita: бандажи и тонометры</p>
+      </div>
+      <div class="videos-grid" id="videos-grid">
+        <div class="video-card">
+          <video controls playsinline poster="images/content (4).jpg">
+            <source src="video/video1-baby-bandage.mp4" type="video/mp4">
+          </video>
+          <h3>Бандаж детский для пупочной грыжи</h3>
+          <p>Модель 01902 — специальный пилот, Velcro, согревающий эффект</p>
+        </div>
+        <div class="video-card">
+          <video controls playsinline poster="images/content (2).jpg">
+            <source src="video/video2-elastic-bandage.mp4" type="video/mp4">
+          </video>
+          <h3>Бандаж фиксирующий эластичный</h3>
+          <p>Модель 01904 — с жёсткими вставками, для поясницы</p>
+        </div>
+        <div class="video-card">
+          <video controls playsinline poster="images/content (12).jpg">
+            <source src="video/video3-support-bandage.mp4" type="video/mp4">
+          </video>
+          <h3>Бандаж поддерживающий для руки</h3>
+          <p>Модель 01910 — премиум качество, универсальная посадка</p>
+        </div>
+        <div class="video-card">
+          <video controls playsinline poster="images/content (3).jpg">
+            <source src="video/video4-tonometer.mp4" type="video/mp4">
+          </video>
+          <h3>Тонометр TM Temvita</h3>
+          <p>Измерение артериального давления — анероидный тонометр</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certificates -->
+  <section class="section certificates" id="certificates">
+    <div class="container">
+      <div class="section-header">
+        <h2>Регистрационные удостоверения</h2>
+        <p class="section-sub">Все изделия зарегистрированы в Республике Казахстан. Скачайте PDF для проверки.</p>
+      </div>
+      <div class="certs-grid" id="certs-grid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Footer -->
+  <footer class="footer" id="contact">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo">tem<span>vita</span></div>
+        <p>ТОО «TEMVITA»<br>Медицинские изделия премиум-качества</p>
+      </div>
+      <div class="footer-contacts">
+        <p><strong>Контакт:</strong> Сатыбалдинова Айнагуль Орынбаевна</p>
+        <p><a href="tel:+77752607311">+7 775 260 7311</a></p>
+        <p>г. Астана, ул. Тәуелсіздік, 22А, БЦ Quorum, 7 эт., каб. 704</p>
+      </div>
+      <div class="footer-qr">
+        <div id="qrcode-footer" class="qrcode small"></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ТОО «TEMVITA». Все права защищены. <span id="price-valid-date">Цены действительны от 21.08.2026.</span></p>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp" href="https://wa.me/77752607311?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D0%B5%D0%BD%D1%8F%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%86%D0%B8%D1%8F%20TEMVITA." target="_blank" rel="noopener" aria-label="Написать в WhatsApp">WA</a>
+
+  <div class="mobile-actionbar" aria-label="Быстрые действия">
+    <a href="tel:+77752607311">Позвонить</a>
+    <a class="wa" href="https://wa.me/77752607311?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%9C%D0%B5%D0%BD%D1%8F%20%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D1%83%D0%B5%D1%82%20%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%86%D0%B8%D1%8F%20TEMVITA." target="_blank" rel="noopener">WhatsApp</a>
+    <a href="#products">Каталог</a>
+  </div>
+
+  <div class="image-modal" id="image-modal" aria-hidden="true" role="dialog" aria-label="Просмотр изображения">
+    <button class="image-modal-close" type="button" id="image-modal-close" aria-label="Закрыть">×</button>
+    <img id="image-modal-img" alt="">
+    <p id="image-modal-caption"></p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
