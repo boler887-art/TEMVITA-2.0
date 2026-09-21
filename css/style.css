@@ -12,8 +12,8 @@
   --radius: 16px;
   --shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
   --gold: #d4af77;
-  --ornament-right-image: url('../images/ornament.svg');
-  --ornament-corner-image: url('../images/ornament-corner.svg');
+  --ornament-right-image: url('../ornament-right.png');
+  --ornament-corner-image: url('../ornament-corner.png');
 }
 
 * {
@@ -49,41 +49,43 @@ body {
 
 
 /* ===== CHANGEABLE KAZAKH ORNAMENTS =====
-   Root files named ornament-right.* and ornament-corner(s).* override these defaults via JS.
-   Transparent PNG/WebP/SVG works best. The site automatically scales and softly tints them gold. */
+   Default files live in repository root:
+   ornament-right.png  — narrow vertical strip (user picture 1)
+   ornament-corner.png — corner watermark (user picture 2)
+   They can be replaced without editing HTML/CSS. JS also accepts 1.* and 2.* aliases. */
 .right-ornament-watermark {
   position: fixed;
   top: 0;
-  right: 4px;
-  width: 34px;
+  right: max(8px, calc((100vw - 1100px) / 2 + 8px));
+  width: 30px;
   height: 100vh;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.20;
+  z-index: 8;
+  opacity: 0.23;
   background-image: var(--ornament-right-image);
   background-repeat: repeat-y;
   background-position: center top;
-  background-size: 32px auto;
-  filter: sepia(1) saturate(1.35) hue-rotate(355deg) brightness(1.12);
+  background-size: 24px auto;
+  filter: sepia(1) saturate(1.25) hue-rotate(352deg) brightness(1.06);
 }
 
 .corner-ornament {
   position: fixed;
-  width: 72px;
-  height: 72px;
+  width: 112px;
+  height: 78px;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.12;
+  z-index: 7;
+  opacity: 0.14;
   background-image: var(--ornament-corner-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  filter: sepia(1) saturate(1.35) hue-rotate(355deg) brightness(1.12);
+  filter: sepia(1) saturate(1.18) hue-rotate(352deg) brightness(1.02);
 }
-.corner-tl { top: 7px; left: 7px; }
-.corner-tr { top: 7px; right: 42px; transform: scaleX(-1); }
-.corner-bl { bottom: 7px; left: 7px; transform: scaleY(-1); }
-.corner-br { bottom: 7px; right: 42px; transform: scale(-1); }
+.corner-tl { top: 8px; left: max(8px, calc((100vw - 1100px) / 2 + 8px)); }
+.corner-tr { top: 8px; right: max(44px, calc((100vw - 1100px) / 2 + 42px)); transform: scaleX(-1); }
+.corner-bl { bottom: 8px; left: max(8px, calc((100vw - 1100px) / 2 + 8px)); transform: scaleY(-1); }
+.corner-br { bottom: 8px; right: max(44px, calc((100vw - 1100px) / 2 + 42px)); transform: scale(-1); }
 
 /* ===== HOLIDAY MINI-BANNER =====
    [hidden] means absolutely no blank space when no holiday card exists. */
@@ -305,12 +307,43 @@ body {
 }
 .qrcode {
   background: #fff;
-  padding: 10px;
+  padding: 8px;
   border-radius: 8px;
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 156px;
+  height: 156px;
+  flex: 0 0 156px;
+  overflow: hidden;
 }
 .qrcode.small {
+  width: 112px;
+  height: 112px;
+  flex-basis: 112px;
   padding: 6px;
+}
+.qrcode img,
+.qrcode canvas,
+.qrcode .qr-fallback {
+  display: block !important;
+  width: 140px !important;
+  height: 140px !important;
+  min-width: 140px !important;
+  min-height: 140px !important;
+  max-width: 140px !important;
+  max-height: 140px !important;
+  object-fit: contain;
+}
+.qrcode.small img,
+.qrcode.small canvas,
+.qrcode.small .qr-fallback {
+  width: 100px !important;
+  height: 100px !important;
+  min-width: 100px !important;
+  min-height: 100px !important;
+  max-width: 100px !important;
+  max-height: 100px !important;
 }
 .qr-hint {
   font-size: 0.75rem;
@@ -1063,17 +1096,18 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 768px) {
   .right-ornament-watermark {
-    right: 2px;
+    right: 5px;
     width: 22px;
-    background-size: 20px auto;
-    opacity: 0.16;
+    background-size: 18px auto;
+    opacity: 0.18;
   }
   .corner-ornament {
-    width: 46px;
-    height: 46px;
-    opacity: 0.085;
+    width: 74px;
+    height: 50px;
+    opacity: 0.10;
   }
-  .corner-tr, .corner-br { right: 24px; }
+  .corner-tl, .corner-bl { left: 5px; }
+  .corner-tr, .corner-br { right: 28px; }
   .holiday-banner { padding-top: .7rem; }
   .holiday-banner-card { border-radius: 11px; }
   .holiday-media-button img,
@@ -1082,7 +1116,8 @@ body.modal-open { overflow: hidden; }
 }
 
 @media (max-width: 480px) {
-  .corner-ornament { opacity: 0.06; width: 38px; height: 38px; }
-  .right-ornament-watermark { opacity: 0.13; width: 18px; background-size: 16px auto; }
-  .corner-tr, .corner-br { right: 19px; }
+  .corner-ornament { opacity: 0.075; width: 58px; height: 40px; }
+  .right-ornament-watermark { opacity: 0.15; width: 16px; background-size: 14px auto; }
+  .corner-tl, .corner-bl { left: 3px; }
+  .corner-tr, .corner-br { right: 20px; }
 }
