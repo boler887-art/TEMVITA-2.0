@@ -56,8 +56,9 @@ body {
 .right-ornament-watermark {
   position: fixed;
   top: 0;
-  right: max(8px, calc((100vw - 1100px) / 2 + 8px));
-  width: 30px;
+  left: max(8px, calc((100vw - 1100px) / 2 - 105px));
+  right: auto;
+  width: 90px;
   height: 100vh;
   pointer-events: none;
   z-index: 8;
@@ -65,7 +66,7 @@ body {
   background-image: var(--ornament-right-image);
   background-repeat: repeat-y;
   background-position: center top;
-  background-size: 24px auto;
+  background-size: 72px auto;
   filter: sepia(1) saturate(1.25) hue-rotate(352deg) brightness(1.06);
 }
 
@@ -1096,10 +1097,11 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 768px) {
   .right-ornament-watermark {
-    right: 5px;
-    width: 22px;
-    background-size: 18px auto;
-    opacity: 0.18;
+    left: 5px;
+    right: auto;
+    width: 42px;
+    background-size: 34px auto;
+    opacity: 0.16;
   }
   .corner-ornament {
     width: 74px;
@@ -1117,7 +1119,7 @@ body.modal-open { overflow: hidden; }
 
 @media (max-width: 480px) {
   .corner-ornament { opacity: 0.075; width: 58px; height: 40px; }
-  .right-ornament-watermark { opacity: 0.15; width: 16px; background-size: 14px auto; }
+  .right-ornament-watermark { left: 3px; right: auto; opacity: 0.13; width: 32px; background-size: 26px auto; }
   .corner-tl, .corner-bl { left: 3px; }
   .corner-tr, .corner-br { right: 20px; }
 }
